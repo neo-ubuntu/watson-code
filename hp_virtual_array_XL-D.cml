@@ -1,0 +1,1650 @@
+/////////////////////////////////////////////////////////////////////
+// Hewlett Packard  hp_virtual_array_XL-D.cml             		     
+// StorageWorks P-Series Storage Arrays                      
+// Author: Cris Zulueta 01/10/11                        
+/////////////////////////////////////////////////////////////////////
+
+//TAG: Fwd_Decl
+class M66xx_FC_Drive_Bay: HPQ_FC_Drive_Bay;
+component hpq_lff_m6612_drive_bay: M66xx_FC_Drive_Bay;
+component hpq_lff_m6612_drive_bay_horiz: M66xx_FC_Drive_Bay;
+component hpq_sff_m6612_drive_bay: M66xx_FC_Drive_Bay;
+component hpq_sff_m6612_drive_bay_horiz: M66xx_FC_Drive_Bay;
+
+class M66xx_HPQ_SAS_Disk_Drive: HPQ_FC_Disk_Drive;
+class M6612_HPQ_SAS_LFF_Disk_Drive: M66xx_HPQ_SAS_Disk_Drive;
+component hpq_600gb_10k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive;
+component hpq_300gb_15k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive;
+component hpq_450gb_15k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive;
+component hpq_600gb_15k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive;
+component hpq_1tb_7p2k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive;
+ 
+class M6625_HPQ_SAS_SFF_Disk_Drive: M66xx_HPQ_SAS_Disk_Drive;
+component hpq_146gb_10k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive;
+component hpq_300gb_10k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive;
+component hpq_72gb_15k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive;
+component hpq_146gb_15k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive;
+component hpq_500gb_15k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive;
+
+
+class HPQ_M66xx_SAS_HDD_Requester: Disk_Drive_Requestor_Second;
+component hpq_600gb_10k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_146gb_10k_m6612_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_600gb_10k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_300gb_15k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_450gb_15k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_600gb_15k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_1tb_7p2k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_146gb_10k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_300gb_10k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_72gb_15k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_146gb_15k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+component hpq_500gb_15k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester;
+
+class M6612_LFF_Case_Base: HPQ_FC_Drive_Case_Base;
+class M6612_LFF_Case_Extra: HPQ_FC_Drive_Case_Extra;
+component hpq_fc_drive_encl_m6612_case: M6612_LFF_Case_Base;
+component hpq_fc_drive_encl_m6612_case_extra: M6612_LFF_Case_Extra;
+
+class M6625_SFF_Case_Base: HPQ_FC_Drive_Case_Base;
+class M6625_SFF_Case_Extra: HPQ_FC_Drive_Case_Extra;
+component hpq_fc_drive_encl_m6625_case: M6625_SFF_Case_Base;
+component hpq_fc_drive_encl_m6625_case_extra: M6625_SFF_Case_Extra;
+
+
+class M6612_LFF_Model: HPQ_FC_Drive_Enclosure_model;
+class M6612_LFF_Model_Extra: HPQ_FC_Drive_Enclosure_model;
+component hpq_fc_drive_encl_m6612_model: M6612_LFF_Model;
+component hpq_fc_drive_encl_m6612_model_extra: M6612_LFF_Model_Extra;
+
+class M6625_SFF_Model: HPQ_FC_Drive_Enclosure_model;
+class M6625_SFF_Model_Extra: HPQ_FC_Drive_Enclosure_model;
+component hpq_fc_drive_encl_m6625_model: M6625_SFF_Model;
+component hpq_fc_drive_encl_m6625_model_extra: M6625_SFF_Model_Extra;
+
+//TAG: Resources
+
+class EVA_P6300_MultiModel_Context_SubSystem: EVA_Modular_Context_SubSystem {}
+class EVA_P6500_MultiModel_Context_SubSystem: EVA_Modular_Context_SubSystem {}
+
+component hpq_eva_P6300_multimodel_context_subsystem: EVA_P6300_MultiModel_Context_SubSystem
+{
+productLines: HP;
+description: ?this.description_S;
+values:
+	description_S = "multimodel";
+	//This to false since P-Series racks to U2 not eva rack
+	rack_table_generation_for_bundled_system_B = FALSE;
+}
+
+component hpq_eva_P6300_bundle_multimodel_context_subsystem: EVA_P6300_MultiModel_Context_SubSystem
+{
+productLines: HP;
+description: ?this.description_S;
+values:
+	description_S = "multimodel";
+	//This to false since P-Series racks to U2 not eva rack
+	rack_table_generation_for_bundled_system_B = FALSE;
+}
+
+component hpq_eva_P6500_multimodel_context_subsystem: EVA_P6500_MultiModel_Context_SubSystem
+{
+productLines: HP;
+description: ?this.description_S;
+values:
+	description_S = "multimodel";
+	//This to false since P-Series racks to U2 not eva rack
+	rack_table_generation_for_bundled_system_B = FALSE;
+}
+
+component hpq_eva_P6500_bundle_multimodel_context_subsystem: EVA_P6500_MultiModel_Context_SubSystem
+{
+productLines: HP;
+description: ?this.description_S;
+values:
+	description_S = "multimodel";
+	//This to false since P-Series racks to U2 not eva rack
+	rack_table_generation_for_bundled_system_B = FALSE;
+}
+
+resource HPQ_SAS_M66xx_Bay_Resource: External_Bay_Resource
+{
+  description: "M66xx SAS Drives";
+}
+
+class M66xx_FC_Drive_Bay: HPQ_FC_Drive_Bay {}
+//The order of drive installation is supposed to be 
+// 7,8,6,9,5,10,... hence this wierd function
+function Float bay_prioritized_value_F on M66xx_FC_Drive_Bay()
+{
+	CIM_Case_Instance ?case;
+	Float ?index;
+	 
+	SETVALUE(?case, ancestor(?this,CIM_Case));
+	SETVALUE(?index, ?this.bay_index_F);
+
+	return(?index);
+}
+
+component hpq_lff_m6612_drive_bay: M66xx_FC_Drive_Bay
+{	
+description: "M6612 LFF Drive Enclosure Bay";
+resource:
+	HPQ_SAS_M66xx_Bay_Resource;
+	Bay_Height_Resource, 1;
+fillDirection: [LR];
+values:
+	hp_FillerClasses = {};
+	sb_Width = 30;
+	sb_Height = 70;
+}
+
+//Introduce a new bay
+component hpq_lff_m6612_drive_bay_horiz: M66xx_FC_Drive_Bay
+{	
+description: "M6612 LFF Drive Enclosure Bay";
+resource:
+	HPQ_SAS_M66xx_Bay_Resource;
+	Bay_Height_Resource, 1;
+fillDirection: [LR];
+values:
+	hp_FillerClasses = {};
+	sb_Width = 125;
+	sb_Height = 20;
+}
+
+component hpq_sff_m6625_drive_bay: M66xx_FC_Drive_Bay
+{	
+description: "M6612 SFF Drive Enclosure Bay";
+resource:
+	HPQ_SAS_M66xx_Bay_Resource;
+	Bay_Height_Resource, 1;
+fillDirection: [LR];
+values:
+	hp_FillerClasses = {};
+	sb_Width = 30;
+	sb_Height = 70;
+}
+
+//Introduce a new bay
+component hpq_sff_m6625_drive_bay_horiz: M66xx_FC_Drive_Bay
+{	
+description: "M6612 SFF Drive Enclosure Bay";
+resource:
+	HPQ_SAS_M66xx_Bay_Resource;
+	Bay_Height_Resource, 1;
+fillDirection: [LR];
+values:
+	hp_FillerClasses = {};
+	sb_Width = 125;
+	sb_Height = 20;
+}
+
+//TAG: Drives
+class M66xx_HPQ_SAS_Disk_Drive: HPQ_FC_Disk_Drive
+{
+attributes:
+	sb_Width = 125;
+	sb_Height = 20;
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+	container_resource_required_R = HPQ_FC_M6412_Bay_Resource;
+	device_type_id_S = "SAS";
+	sb_Interactive = 0;
+}
+class M6612_HPQ_SAS_LFF_Disk_Drive: M66xx_HPQ_SAS_Disk_Drive {}
+
+component hpq_600gb_10k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6612 600GB 6G SAS 10K 3.5in HDD  (AP869A)";                                                                                         
+label: "HP M6612 600GB SAS 10K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 600;
+subComponents:
+    hpq_600gb_10k_m6612_sas_lff_drive_requester;
+values:
+	visible_part_number_S = "AP869A";
+	disk_speed_F = 10;
+	speed_F = 10;
+	my_visio_template_S = "M6612 10k 600GB SAS LFF";
+	capacity_F = 600;
+}
+
+component hpq_300gb_15k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6612 300GB 6G SAS 15K 3.5in HDD  (AP870A)";                                                                                         
+label: "HP M6612 300GB SAS 15K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 300;
+subComponents:
+    hpq_300gb_15k_m6612_sas_lff_drive_requester;
+values:
+	visible_part_number_S = "AP870A";
+	disk_speed_F = 15;
+	speed_F = 15;
+	my_visio_template_S = "M6612 15k 300GB SAS LFF";
+	capacity_F = 300;
+}
+
+component hpq_450gb_15k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6612 450GB 6G SAS 15K 3.5in HDD  (AP871A)";                                                                                         
+label: "HP M6612 450GB SAS 15K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 450;
+subComponents:
+    hpq_450gb_15k_m6612_sas_lff_drive_requester;
+values:
+	visible_part_number_S = "AP871A";
+	disk_speed_F = 15;
+	speed_F = 15;
+	my_visio_template_S = "M6612 15k 450GB SAS LFF";
+	capacity_F = 450;
+}
+
+component hpq_600gb_15k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6612 600GB 6G SAS 15K 3.5in HDD  (AP872A)";                                                                                         
+label: "HP M6612 450GB SAS 15K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 450;
+subComponents:
+    hpq_450gb_15k_m6612_sas_lff_drive_requester;
+values:
+	visible_part_number_S = "AP872A";
+	disk_speed_F = 15;
+	speed_F = 15;
+	my_visio_template_S = "M6612 10k 450GB SAS LFF";
+	capacity_F = 450;
+}
+
+component hpq_1tb_7p2k_m6612_sas_lff_drive: M6612_HPQ_SAS_LFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6612 1TB 3G SAS 7.2K 3.5in MDL HDD  (AP873A)";                                                                                         
+label: "HP M6612 1TB SAS 7.2K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 1000;
+subComponents:
+    hpq_1tb_7p2k_m6612_sas_lff_drive_requester;
+values:
+	visible_part_number_S = "AP873A";
+	disk_speed_F = 7.2;
+	speed_F = 7.2;
+	my_visio_template_S = "M6612 10k 450GB SAS LFF";
+	capacity_F = 1000;
+} 
+
+class M6625_HPQ_SAS_SFF_Disk_Drive: M66xx_HPQ_SAS_Disk_Drive 
+{
+attributes:
+	sb_Width = 125;
+	sb_Height = 20;
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+	container_resource_required_R = HPQ_FC_M6412_Bay_Resource;
+	device_type_id_S = "SAS";
+	sb_Interactive = 0;
+	is_LFF_B = FALSE;
+}
+
+component hpq_146gb_10k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6625 146GB 6G SAS 10K 2.5in HDD (AP874A)";                                                                                         
+label: "HP M6625 146GB SAS 10K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 146;
+subComponents:
+    hpq_146gb_10k_m6612_sas_sff_drive_requester;
+values:
+	visible_part_number_S = "AP874A";
+	disk_speed_F = 10;
+	speed_F = 10;
+	my_visio_template_S = "M6612 10k 146GB SAS SFF";
+	capacity_F = 146;
+}
+
+component hpq_300gb_10k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6625 300GB 6G SAS 10K 2.5in HDD (AP875A)";                                                                                         
+label: "HP M6625 146GB SAS 10K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 300;
+subComponents:
+    hpq_300gb_10k_m6612_sas_sff_drive_requester;
+values:
+	visible_part_number_S = "AP875A";
+	disk_speed_F = 10;
+	speed_F = 10;
+	my_visio_template_S = "M6612 10k 300GB SAS SFF";
+	capacity_F = 300;
+}
+
+component hpq_72gb_15k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6625 72GB 6G SAS 15K 2.5in HDD (AP876A)";                                                                                         
+label: "HP M6625 72GB SAS 15K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 72;
+subComponents:
+    hpq_72gb_15k_m6612_sas_sff_drive_requester;
+values:
+	visible_part_number_S = "AP876A";
+	disk_speed_F = 15;
+	speed_F = 15;
+	my_visio_template_S = "M6612 15k 72GB SAS SFF";
+	capacity_F = 72;
+}
+
+component hpq_146gb_15k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6625 146GB 6G SAS 15K 2.5in HDD (AP877A)";                                                                                         
+label: "HP M6625 146GB SAS 15K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 146;
+subComponents:
+    hpq_146gb_15k_m6612_sas_sff_drive_requester;
+values:
+	visible_part_number_S = "AP877A";
+	disk_speed_F = 15;
+	speed_F = 15;
+	my_visio_template_S = "M6612 15k 146GB SAS SFF";
+	capacity_F = 146;
+}
+
+component hpq_500gb_15k_m6625_sas_sff_drive: M6625_HPQ_SAS_SFF_Disk_Drive
+{
+productLines: EVA_PRODUCTLINES;	
+description: "HP M6625 500GB 6G SAS 15K 2.5in HDD (AP878A)";                                                                                         
+label: "HP M6625 500GB SAS 15K HDD ";                                                                                                             
+resource:                                                                                                                        
+	Disk_GB_Resource, 500;
+subComponents:
+    hpq_500gb_15k_m6612_sas_sff_drive_requester;
+values:
+	visible_part_number_S = "AP878A";
+	disk_speed_F = 15;
+	speed_F = 15;
+	my_visio_template_S = "M6612 15k 5006GB SAS SFF";
+	capacity_F = 500;
+}
+
+class HPQ_M66xx_SAS_HDD_Requester: Disk_Drive_Requestor_Second 
+{
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+}
+
+//TAG: LFF_Drive_Requestors
+component hpq_600gb_10k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP 600GB 10K FC EVA M6412 Enc HDD (AP869A)";                                                                                         
+label: "600GB 10K Disk";
+values:
+	capacity_F = 600;
+	raw_capacity_F = 558.81;	//419.10;  // EVA_CALCULATION raw
+	raid0_capacity_F = 558.81;	//419.10;  // EVA_CALCULATION 1.2
+	raid1_capacity_F = 279.42;	//209.55;  // EVA_CALCULATION 2.0	
+	raid5_capacity_F = 447.06;	//335.28;  // EVA_CALCULATION 1.5 
+	raid6_capacity_F = 372.54;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_300gb_15k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP 300GB 15K FC EVA M6412 Enc HDD (AP870A)";                                                                                         
+label: "300GB 15K Disk";
+values:
+	capacity_F = 300;
+	raw_capacity_F = 279.40;	//419.10;  // EVA_CALCULATION raw		
+	raid0_capacity_F = 279.40;	//TD EVA_CALCULATION 250;//1.2
+	raid1_capacity_F = 139.70;	//TD EVA_CALCULATION 150;//2
+	raid5_capacity_F = 223.52;	//TD EVA_CALCULATION 200;//1.5
+	raid6_capacity_F = 186.27;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_450gb_15k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP 450GB 15K FC EVA M6412 Enc HDD (AP871A)";                                                                                         
+label: "450GB 15K Disk";
+values:
+	capacity_F = 450;
+	raw_capacity_F = 419.10;	//419.10;  // EVA_CALCULATION raw
+	raid0_capacity_F = 419.10;  //TD EVA_CALCULATION 375;//1.2
+	raid1_capacity_F = 209.55;  //TD EVA_CALCULATION 225;//2
+	raid5_capacity_F = 335.28;  //TD EVA_CALCULATION 300;//1.5
+	raid6_capacity_F = 279.40;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_600gb_15k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP 600GB 15K FC EVA M6412 Enc HDD (AP872A)";                                                                                         
+label: "600GB 15K Disk";
+values:
+	capacity_F = 600;
+	raw_capacity_F = 558.81;	//419.10;  // EVA_CALCULATION raw 
+	raid0_capacity_F = 558.81;  //419.10;  // EVA_CALCULATION
+	raid1_capacity_F = 279.42;  //209.55;  // EVA_CALCULATION	
+	raid5_capacity_F = 447.06;  //335.28;  // EVA_CALCULATION 
+	raid6_capacity_F = 372.54;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_1tb_7p2k_m6612_sas_lff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP M6612 1TB 3G SAS 7.2K 3.5in MDL HDD (AP873A)";                                                                                         
+label: "1TB 7.2K Disk";
+values:
+	capacity_F = 1000;
+	raw_capacity_F = 931.32;	//419.10;  // EVA_CALCULATION raw
+	raid0_capacity_F = 931.32; //TD EVA_CALCULATION	833.3;//1.2
+	raid1_capacity_F = 465.66; //TD EVA_CALCULATION	500;//2
+	raid5_capacity_F = 745.06; //TD EVA_CALCULATION	666.7;//1.5
+	raid6_capacity_F = 620.88;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+//TAG: SFF_Drive_Requestors
+component hpq_146gb_10k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP M6625 146GB 6G SAS 10K 2.5in HDD (AP874A)";                                                                                         
+label: "146GB 10K Disk";
+values:
+	capacity_F = 146;
+	raw_capacity_F = 135.97;	//419.10;  // EVA_CALCULATION raw	
+	raid0_capacity_F = 135.97;	//TD EVA_CALCULATION 122.12;
+	raid1_capacity_F = 67.99;	//TD EVA_CALCULATION 73;
+	raid5_capacity_F = 108.78;	//TD EVA_CALCULATION 97.62;
+	raid6_capacity_F = 90.65;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_300gb_10k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP M6625 300GB 6G SAS 10K 2.5in HDD (AP875A)";                                                                                         
+label: "300GB 10K Disk";
+values:
+	capacity_F = 300;
+	raw_capacity_F = 279.40;	//419.10;  // EVA_CALCULATION raw		
+	raid0_capacity_F = 279.40;	//TD EVA_CALCULATION 250;//1.2
+	raid1_capacity_F = 139.70;	//TD EVA_CALCULATION 150;//2
+	raid5_capacity_F = 223.52;	//TD EVA_CALCULATION 200;//1.5
+	raid6_capacity_F = 186.27;	//	      RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_72gb_15k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP M6625 72GB 6G SAS 15K 2.5in HDD (AP876A)";                                                                                         
+label: "72GB 15K Disk";
+values:
+	capacity_F = 72;
+	raw_capacity_F = 67.99;		//419.10;  // EVA_CALCULATION raw	
+	raid0_capacity_F = 67.99;	//TD EVA_CALCULATION 61.06;
+	raid1_capacity_F = 33.99;	//TD EVA_CALCULATION 36.5;
+	raid5_capacity_F = 54.39;	//TD EVA_CALCULATION 48.81;
+	raid6_capacity_F = 45.34;	//TD RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_146gb_15k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP M6625 146GB 6G SAS 15K 2.5in HDD (AP876A)";                                                                                         
+label: "146GB 15K Disk";
+values:
+	capacity_F = 146;
+	raw_capacity_F = 135.97;	//419.10;  // EVA_CALCULATION raw	
+	raid0_capacity_F = 135.97;	//TD EVA_CALCULATION 122.12;
+	raid1_capacity_F = 67.99;	//TD EVA_CALCULATION 73;
+	raid5_capacity_F = 108.78;	//TD EVA_CALCULATION 97.62;
+	raid6_capacity_F = 90.65;	//TD RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+component hpq_500gb_15k_m6625_sas_sff_drive_requester: HPQ_M66xx_SAS_HDD_Requester
+{
+description: "HP M6625 500GB 6G SAS 15K 2.5in HDD (AP878A)";                                                                                         
+label: "500GB 15K Disk";
+values:
+	capacity_F = 500;
+	raw_capacity_F = 465.66;	//419.10;  // EVA_CALCULATION raw 
+	raid0_capacity_F = 465.66;	//TD EVA_CALCULATION 420;//cap*.84
+	raid1_capacity_F = 232.83;	//TD EVA_CALCULATION 250;//cap*0.5
+	raid5_capacity_F = 372.53;	//TD EVA_CALCULATION 334;//cap*0.668
+	raid6_capacity_F = 310.44;	//TD RAID6 CALCULATION
+	is_emr_B = FALSE;                                                                                                             
+}
+
+//TAG: P6300_Controller_Shelf_Cases
+
+component hpq_p6300_half_controller_case: HPQ_HSV_Half_Controller_Case
+{
+productLines: HP;
+description: "Single P6300 Controller";
+label: "Single P6300 Controller";
+values:
+	case_id_S = ""; 
+	sb_Label_Orientation = "HORIZONTAL";
+	sb_Label_Location = "TOP_CENTER";
+	sb_Width = 680;
+	sb_Height = 80;
+	height_F = 3.5;//2U
+	sb_LabelHeight = 20;
+	sb_LabelWidth = 400;
+	weight_F = 49.0;//?
+	should_bundle_B = FALSE;
+	integration_state_S = "CUSTOM";
+ 	power_watts_F = 134;//take Watts @ low voltage 268/2
+ 	power_va_required_F = 135;
+	//The data is for HSV controller case, each case includes 2 half-cases
+	//and hence 4 power supplies, so divide the data by 4
+	220V_amps_drawn_F = 0.28;//1.1/4
+	110V_amps_drawn_F = 0.7;//2.8/4
+	ok_fibre_cables_mC = {
+			           	  	 	0p5m_hpq_multi_mode_om3_fc_lc_lc_cable, //AJ833A
+								1m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ834A
+								2m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ835A
+								5m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ836A
+								15m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ837A
+								30m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ838A
+								50m_hpq_multi_mode_om3_fc_lc_lc_cable,  //AJ839A
+							 	internal_eva_cable,
+								2m_hpq_fc_lc_lc_cable, 					//221692-B21   
+		                  		5m_hpq_fc_lc_lc_cable,					//221692-B22
+		              	  		15m_hpq_fc_lc_lc_cable,					//221692-B23
+		              	  		30m_hpq_fc_lc_lc_cable,					//221692-B26
+		              	  		50m_hpq_fc_lc_lc_cable,					//221692-B27
+								0p5m_premier_flex_lc_lc_cable			// BK837A
+								1m_premier_flex_lc_lc_cable				// BK838A
+								2m_premier_flex_lc_lc_cable				// BK839A
+								5m_premier_flex_lc_lc_cable				// BK840A
+								15m_premier_flex_lc_lc_cable			// BK841A
+								30m_premier_flex_lc_lc_cable			// BK842A
+								50m_premier_flex_lc_lc_cable			// BK843A
+	                     };
+subComponents:  
+	CIM_Slot slot1_CI = hsv_controller_slot;
+	CIM_Slot slot2_CI = hsv_controller_slot;
+	Container power_supply_space1_CI = hpq_power_supply_space [630,25];
+	CIM_Power_Supply  power_supply_CI = hsv_power_supply;     
+	Container power_supply_space2_CI = hpq_power_supply_space [630,25];
+	CIM_Power_Supply power_supply2_CI = hsv_power_supply;     
+}
+
+class HPQ_HSV400_Controller_Case: HPQ_HSV110_Controller_M3320_Case; 
+class HPQ_HSV400_Controller_Model: HPQ_HSV110_M3320_Controller_Model;
+
+component hpq_p6300_controller_case: HPQ_HSV400_Controller_Case;
+component hpq_p6300_controller_model: HPQ_HSV400_Controller_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES; 
+description: "HP P6300 EVA Dual Controller FC Array (AJ936A)";
+values:
+	spu_model_label_S = "HP P6300 EVA Dual Controller FC Array (AJ936A)";
+	my_builder_sheet_C = hpq_hsv200_builder_sheet;			   
+	model_case_C = hpq_p6300_controller_case;
+	scc_preferred_channels_mC = {scc_fc_lc_channel}; 
+	bundled_components_mC = {hsv_controller, hsv_controller, hsv_controller, hsv_controller};
+	partslist_category_mR = {};
+	alternative_part_number_S = "AJ936A";
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+}
+												 
+component hpq_p6300_controller_case: HPQ_HSV400_Controller_Case
+{
+productLines: EVA_BLUE_PRODUCTLINES; 
+description: "P6300 Controller Assembly";
+label: ?this.long_description_S;
+resource: Rackmount_Resource;
+values:
+	possible_cabinets_mC = {storage_centric_null_rack, power_on_site_null_rack, EVA_TENKG2_RACKS, hp_S10614_rack};
+	weight_F = 98.0;
+	sb_Width = 680;
+	sb_Height = 160;//??
+	height_F = 7;// = 4U
+	case_id_S = "g_EVA_DiskShelf";
+	racked_case_B = TRUE;
+	my_model_C = hpq_hsv400_controller_model;
+	sb_LabelHeight = 40;
+	sb_LabelWidth = 20;
+	sb_Label_Orientation = "VERTICAL";
+	sb_Label_Location = "TOP_RIGHT";
+    description_S = "P6300 Controller Assembly";	
+	user_label_S = "P6300 Controller Assembly";
+	mytechband_C = tech300;
+	my_extn_techband_C = tech3MZ;
+	my_pe_techband_C = tech3Z4; 
+	my_visio_template_S = "P6300 front";//Temp
+	user_can_change_quoted_B = FALSE;
+ 	power_watts_F = 268;
+ 	power_va_required_F = 270;
+	//These attributes are set on half controller since the power_supplies are on half_case
+    //110V_amps_drawn_F; 
+    //220V_amps_drawn_F;	
+subComponents:  
+	HPQ_HSV110_Half_Controller_Case case1_CI = hpq_p6300_half_controller_case[0,0];
+	HPQ_HSV110_Half_Controller_Case case2_CI = hpq_p6300_half_controller_case[0,80];
+}
+
+//TAG: P6500_Controller_Shelf_Cases
+
+component hpq_p6500_half_controller_case: HPQ_HSV_Half_Controller_Case
+{
+productLines: HP;
+description: "Single P6500 Controller";
+label: "Single P6500 Controller";
+values:
+	case_id_S = ""; 
+	sb_Label_Orientation = "HORIZONTAL";
+	sb_Label_Location = "TOP_CENTER";
+	sb_Width = 680;
+	sb_Height = 80;
+	height_F = 3.5;
+	sb_LabelHeight = 20;
+	sb_LabelWidth = 400;
+	weight_F = 49.0;//?
+	should_bundle_B = FALSE;
+	integration_state_S = "CUSTOM";
+ 	power_watts_F = 134;//take Watts @ low voltage 268/2
+ 	power_va_required_F = 135;
+	//The data is for HSV controller case, each case includes 2 half-cases
+	//and hence 4 power supplies, so divide the data by 4
+	220V_amps_drawn_F = 0.28;//1.1/4
+	110V_amps_drawn_F = 0.7;//2.8/4
+	ok_fibre_cables_mC = {
+			           	  	 	0p5m_hpq_multi_mode_om3_fc_lc_lc_cable, //AJ833A
+								1m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ834A
+								2m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ835A
+								5m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ836A
+								15m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ837A
+								30m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ838A
+								50m_hpq_multi_mode_om3_fc_lc_lc_cable,  //AJ839A
+							 	internal_eva_cable,
+								2m_hpq_fc_lc_lc_cable, 					//221692-B21   
+		                  		5m_hpq_fc_lc_lc_cable,					//221692-B22
+		              	  		15m_hpq_fc_lc_lc_cable,					//221692-B23
+		              	  		30m_hpq_fc_lc_lc_cable,					//221692-B26
+		              	  		50m_hpq_fc_lc_lc_cable,					//221692-B27
+								0p5m_premier_flex_lc_lc_cable			// BK837A
+								1m_premier_flex_lc_lc_cable				// BK838A
+								2m_premier_flex_lc_lc_cable				// BK839A
+								5m_premier_flex_lc_lc_cable				// BK840A
+								15m_premier_flex_lc_lc_cable			// BK841A
+								30m_premier_flex_lc_lc_cable			// BK842A
+								50m_premier_flex_lc_lc_cable			// BK843A
+	                     };
+subComponents:  
+	CIM_Slot slot1_CI = hsv_controller_slot;
+	CIM_Slot slot2_CI = hsv_controller_slot;
+	Container power_supply_space1_CI = hpq_power_supply_space [630,25];
+	CIM_Power_Supply  power_supply_CI = hsv_power_supply;     
+	Container power_supply_space2_CI = hpq_power_supply_space [630,25];
+	CIM_Power_Supply power_supply2_CI = hsv_power_supply;     
+}
+
+class HPQ_HSV450_Controller_Case: HPQ_HSV110_Controller_M3320_Case;
+class HPQ_HSV450_Controller_Model: HPQ_HSV110_M3320_Controller_Model;
+
+component hpq_p6500_controller_case: HPQ_HSV450_Controller_Case;
+component hpq_p6500_controller_model: HPQ_HSV450_Controller_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES; 
+description: "HP P6500 EVA Dual Controller FC Array (AJ938A)";
+values:
+	spu_model_label_S = "HP P6500 EVA Dual Controller FC Array (AJ938A)";
+	my_builder_sheet_C = hpq_hsv200_builder_sheet;			   
+	model_case_C = hpq_p6500_controller_case;
+	scc_preferred_channels_mC = {scc_fc_lc_channel}; 
+	bundled_components_mC = {hsv_controller, hsv_controller, hsv_controller, hsv_controller};
+	partslist_category_mR = {};
+	alternative_part_number_S = "AJ938A";
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+}
+												 
+component hpq_p6500_fc_controller_case: HPQ_HSV450_Controller_Case
+{
+productLines: EVA_BLUE_PRODUCTLINES; 
+description: "HSV450 Controller Assembly";
+label: ?this.long_description_S;
+resource: Rackmount_Resource;
+values:
+	possible_cabinets_mC = {storage_centric_null_rack, power_on_site_null_rack, EVA_TENKG2_RACKS, hp_S10614_rack};
+	weight_F = 98.0;
+	sb_Width = 680;
+	sb_Height = 160;//??
+	height_F = 7;//1.75*4 = 4U
+	case_id_S = "g_EVA_DiskShelf";
+	racked_case_B = TRUE;
+	my_model_C = hpq_p6500_controller_model;
+	sb_LabelHeight = 40;
+	sb_LabelWidth = 20;
+	sb_Label_Orientation = "VERTICAL";
+	sb_Label_Location = "TOP_RIGHT";
+    description_S = "HSV450 Controller Assembly";	
+	user_label_S = "HSV450 Controller Assembly";
+	// mytechband_C = tech300;
+	//my_extn_techband_C = tech3MZ;
+	//my_pe_techband_C = tech3Z4; 
+	my_visio_template_S = "P6500 front";//Temp
+	user_can_change_quoted_B = FALSE;
+ 	power_watts_F = 268;
+ 	power_va_required_F = 270;
+	//These attributes are set on half controller since the power_supplies are on half_case
+    //110V_amps_drawn_F; 
+    //220V_amps_drawn_F;	
+subComponents:  
+	HPQ_HSV110_Half_Controller_Case case1_CI = hpq_p6500_half_controller_case[0,0];
+	HPQ_HSV110_Half_Controller_Case case2_CI = hpq_p6500_half_controller_case[0,80];
+}
+
+//TAG: Drive_Shelf_Cases
+
+component EVA_M6612_default_drive_requester: EVA_Default_Drive_Requestor 
+{										
+productLines: HP;
+values:
+	my_drive_C = hpq_300gb_15k_m6612_sas_lff_drive;
+	drive_quantity_F = 8;
+}
+
+component EVA_M6625_default_drive_requester: EVA_Default_Drive_Requestor 
+{										
+productLines: HP;
+values:
+	my_drive_C = hpq_146gb_10k_m6625_sas_sff_drive;
+	drive_quantity_F = 8;
+}
+
+//M6612 LFF shelf
+class M6612_LFF_Case_Base: HPQ_FC_Drive_Case_Base 
+{
+attributes:
+	racked_case_B = TRUE;
+	can_rack_on_half_eia_B = TRUE;
+	consider_new_cabinet_in_wizard_B = TRUE;
+    is_clonable_B = FALSE;
+	clone_prohibited_B = TRUE;
+	user_can_change_quoted_B = FALSE;
+
+subComponents:
+	HPQ_FC_Drive_Bay fc_bay1_CI = hpq_lff_m6612_drive_bay_horiz [60,10];
+	HPQ_FC_Drive_Bay fc_bay2_CI = hpq_lff_m6612_drive_bay_horiz [60,30];
+	HPQ_FC_Drive_Bay fc_bay3_CI = hpq_lff_m6612_drive_bay_horiz [60,50];
+	HPQ_FC_Drive_Bay fc_bay4_CI = hpq_lff_m6612_drive_bay_horiz [185,10];
+	HPQ_FC_Drive_Bay fc_bay5_CI = hpq_lff_m6612_drive_bay_horiz [185,30];
+	HPQ_FC_Drive_Bay fc_bay6_CI = hpq_lff_m6612_drive_bay_horiz [185,50];
+	HPQ_FC_Drive_Bay fc_bay7_CI = hpq_lff_m6612_drive_bay_horiz [310,10];
+	HPQ_FC_Drive_Bay fc_bay8_CI = hpq_lff_m6612_drive_bay_horiz [310,30];
+	HPQ_FC_Drive_Bay fc_bay9_CI = hpq_lff_m6612_drive_bay_horiz [310,50];
+	HPQ_FC_Drive_Bay fc_bay10_CI = hpq_lff_m6612_drive_bay_horiz [435,10];
+	HPQ_FC_Drive_Bay fc_bay11_CI = hpq_lff_m6612_drive_bay_horiz [435,30];
+	HPQ_FC_Drive_Bay fc_bay12_CI = hpq_lff_m6612_drive_bay_horiz [435,50];
+
+	CIM_Power_Supply  power_supply_CI = m5314_power_supply;     
+	CIM_Power_Supply  power_supply2_CI = m5314_power_supply;
+
+	HPQ_M5214_Controller_Slot hpq_controller_slot_1_CI = hpq_m6412_controller_slot [40, 5];
+	HPQ_M5214_Controller_Slot hpq_controller_slot_2_CI = hpq_m6412_controller_slot [620, 5];
+}
+
+class M6612_LFF_Case_Extra: HPQ_FC_Drive_Case_Extra 
+{
+attributes:
+	racked_case_B = TRUE;
+	can_rack_on_half_eia_B = TRUE;
+	consider_new_cabinet_in_wizard_B = TRUE;
+    is_clonable_B = FALSE;
+	clone_prohibited_B = TRUE;
+	bundle_with_rack_B = FALSE;
+
+subComponents:
+	HPQ_FC_Drive_Bay fc_bay1_CI = hpq_fc_m6412_drive_bay_horiz [60,10];
+	HPQ_FC_Drive_Bay fc_bay2_CI = hpq_fc_m6412_drive_bay_horiz [60,30];
+	HPQ_FC_Drive_Bay fc_bay3_CI = hpq_fc_m6412_drive_bay_horiz [60,50];
+	HPQ_FC_Drive_Bay fc_bay4_CI = hpq_fc_m6412_drive_bay_horiz [185,10];
+	HPQ_FC_Drive_Bay fc_bay5_CI = hpq_fc_m6412_drive_bay_horiz [185,30];
+	HPQ_FC_Drive_Bay fc_bay6_CI = hpq_fc_m6412_drive_bay_horiz [185,50];
+	HPQ_FC_Drive_Bay fc_bay7_CI = hpq_fc_m6412_drive_bay_horiz [310,10];
+	HPQ_FC_Drive_Bay fc_bay8_CI = hpq_fc_m6412_drive_bay_horiz [310,30];
+	HPQ_FC_Drive_Bay fc_bay9_CI = hpq_fc_m6412_drive_bay_horiz [310,50];
+	HPQ_FC_Drive_Bay fc_bay10_CI = hpq_fc_m6412_drive_bay_horiz [435,10];
+	HPQ_FC_Drive_Bay fc_bay11_CI = hpq_fc_m6412_drive_bay_horiz [435,30];
+	HPQ_FC_Drive_Bay fc_bay12_CI = hpq_fc_m6412_drive_bay_horiz [435,50];
+
+	CIM_Power_Supply  power_supply_CI = m5314_power_supply;     
+	CIM_Power_Supply  power_supply2_CI = m5314_power_supply;
+
+	HPQ_M5214_Controller_Slot hpq_controller_slot_1_CI = hpq_m6412_controller_slot [40, 5];
+	HPQ_M5214_Controller_Slot hpq_controller_slot_2_CI = hpq_m6412_controller_slot [620, 5];
+}
+
+component hpq_fc_drive_encl_m6612_case: M6612_LFF_Case_Base
+{                                                                                                                            
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue; 
+description: "M6612 SAS LFF Drive Enclosure";
+label: "M6612";                                                                                                          
+values:    
+   	visible_part_number_S = "AJ832A";
+	my_model_C = hpq_fc_drive_encl_m6612_model;
+	possible_cabinets_mC = {EVA_TENKG2_RACKS, hp_S10614_rack, storage_centric_null_rack, power_on_site_null_rack};
+	my_visio_template_S = "M6612 Disk front";
+	integration_state_S = "CUSTOM";
+	weight_F = 77; 
+	sb_Width = 680;
+	sb_Height = 80;
+	height_F = 3.5;
+	power_va_required_F = 344;	
+	power_watts_F = 339;	
+    110V_amps_drawn_F = 1.26;//2.52/2 
+    220V_amps_drawn_F = 0.82;//1.63/2	
+	//These attributes shouldn't be set on storage shelves
+	//mytechband_C = tech300;
+	//my_extn_techband_C = tech3MZ;
+	//my_pe_techband_C = tech3Z4; 
+}
+
+component hpq_fc_drive_encl_m6612_case_extra: M6612_LFF_Case_Extra
+{                                                                                                                            
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue;  
+description: "M6625 SAS LFF Drive Enclosure (AJ832A)";
+label: "M6625";                                                                                                          
+values:    
+   	visible_part_number_S = "AJ832A_EXTRA";
+	my_model_C = hpq_fc_drive_encl_m6612_model_extra;		
+	possible_cabinets_mC = {storage_centric_null_rack, power_on_site_null_rack, EVA_TENKG2_RACKS, hp_S10614_rack};
+	case_id_S = "g_EVA_DiskShelf";
+	my_visio_template_S = "M6612 Disk front";//Temp
+	integration_state_S = "CUSTOM";
+	weight_F = 77.0;
+	sb_Width = 680;
+	sb_Height = 80;
+	height_F = 3.5;
+	power_va_required_F = 301;	
+	power_watts_F = 316;	
+    110V_amps_drawn_F = 1.58;//3.16/2 
+    220V_amps_drawn_F = 0.74;//1.47/2
+}
+
+//M6625 SFF shelf
+class M6625_SFF_Case_Base: HPQ_FC_Drive_Case_Base 
+{
+attributes:
+	racked_case_B = TRUE;
+	can_rack_on_half_eia_B = TRUE;
+	consider_new_cabinet_in_wizard_B = TRUE;
+    is_clonable_B = FALSE;
+	clone_prohibited_B = TRUE;
+	user_can_change_quoted_B = FALSE;
+
+subComponents:
+	HPQ_FC_Drive_Bay fc_bay1_CI = hpq_sff_m6625_drive_bay_horiz [60,10];
+	HPQ_FC_Drive_Bay fc_bay2_CI = hpq_sff_m6625_drive_bay_horiz [60,30];
+	HPQ_FC_Drive_Bay fc_bay3_CI = hpq_sff_m6625_drive_bay_horiz [60,50];
+	HPQ_FC_Drive_Bay fc_bay4_CI = hpq_sff_m6625_drive_bay_horiz [185,10];
+	HPQ_FC_Drive_Bay fc_bay5_CI = hpq_sff_m6625_drive_bay_horiz [185,30];
+	HPQ_FC_Drive_Bay fc_bay6_CI = hpq_sff_m6625_drive_bay_horiz [185,50];
+	HPQ_FC_Drive_Bay fc_bay7_CI = hpq_sff_m6625_drive_bay_horiz [310,10];
+	HPQ_FC_Drive_Bay fc_bay8_CI = hpq_sff_m6625_drive_bay_horiz [310,30];
+	HPQ_FC_Drive_Bay fc_bay9_CI = hpq_sff_m6625_drive_bay_horiz [310,50];
+	HPQ_FC_Drive_Bay fc_bay10_CI = hpq_sff_m6625_drive_bay_horiz [435,10];
+	HPQ_FC_Drive_Bay fc_bay11_CI = hpq_sff_m6625_drive_bay_horiz [435,30];
+	HPQ_FC_Drive_Bay fc_bay12_CI = hpq_sff_m6625_drive_bay_horiz [435,50];
+
+	CIM_Power_Supply  power_supply_CI = m5314_power_supply;     
+	CIM_Power_Supply  power_supply2_CI = m5314_power_supply;
+
+	HPQ_M5214_Controller_Slot hpq_controller_slot_1_CI = hpq_m6412_controller_slot [40, 5];
+	HPQ_M5214_Controller_Slot hpq_controller_slot_2_CI = hpq_m6412_controller_slot [620, 5];
+}
+
+class M6625_SFF_Case_Extra: HPQ_FC_Drive_Case_Extra 
+{
+attributes:
+	racked_case_B = TRUE;
+	can_rack_on_half_eia_B = TRUE;
+	consider_new_cabinet_in_wizard_B = TRUE;
+    is_clonable_B = FALSE;
+	clone_prohibited_B = TRUE;
+	bundle_with_rack_B = FALSE;
+
+subComponents:
+	HPQ_FC_Drive_Bay fc_bay1_CI = hpq_sff_m6625_drive_bay_horiz [60,10];
+	HPQ_FC_Drive_Bay fc_bay2_CI = hpq_sff_m6625_drive_bay_horiz [60,30];
+	HPQ_FC_Drive_Bay fc_bay3_CI = hpq_sff_m6625_drive_bay_horiz [60,50];
+	HPQ_FC_Drive_Bay fc_bay4_CI = hpq_sff_m6625_drive_bay_horiz [185,10];
+	HPQ_FC_Drive_Bay fc_bay5_CI = hpq_sff_m6625_drive_bay_horiz [185,30];
+	HPQ_FC_Drive_Bay fc_bay6_CI = hpq_sff_m6625_drive_bay_horiz [185,50];
+	HPQ_FC_Drive_Bay fc_bay7_CI = hpq_sff_m6625_drive_bay_horiz [310,10];
+	HPQ_FC_Drive_Bay fc_bay8_CI = hpq_sff_m6625_drive_bay_horiz [310,30];
+	HPQ_FC_Drive_Bay fc_bay9_CI = hpq_sff_m6625_drive_bay_horiz [310,50];
+	HPQ_FC_Drive_Bay fc_bay10_CI = hpq_sff_m6625_drive_bay_horiz [435,10];
+	HPQ_FC_Drive_Bay fc_bay11_CI = hpq_sff_m6625_drive_bay_horiz [435,30];
+	HPQ_FC_Drive_Bay fc_bay12_CI = hpq_sff_m6625_drive_bay_horiz [435,50];
+
+	CIM_Power_Supply  power_supply_CI = m5314_power_supply;     
+	CIM_Power_Supply  power_supply2_CI = m5314_power_supply;
+
+	HPQ_M5214_Controller_Slot hpq_controller_slot_1_CI = hpq_m6412_controller_slot [40, 5];
+	HPQ_M5214_Controller_Slot hpq_controller_slot_2_CI = hpq_m6412_controller_slot [620, 5];
+}
+
+component hpq_fc_drive_encl_m6625_case: M6625_SFF_Case_Base
+{                                                                                                                            
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue; 
+description: "M6625 SAS SFF Drive Enclosure";
+label: "M6625";                                                                                                          
+values:    
+   	visible_part_number_S = "AJ840A";
+	my_model_C = hpq_fc_drive_encl_m6625_model;
+	possible_cabinets_mC = {EVA_TENKG2_RACKS, hp_S10614_rack, storage_centric_null_rack, power_on_site_null_rack};
+	my_visio_template_S = "M6625 Disk front";
+	integration_state_S = "CUSTOM";
+	weight_F = 77; 
+	sb_Width = 680;
+	sb_Height = 80;
+	height_F = 3.5;
+	power_va_required_F = 344;	
+	power_watts_F = 339;	
+    110V_amps_drawn_F = 1.26;//2.52/2 
+    220V_amps_drawn_F = 0.82;//1.63/2	
+	//These attributes shouldn't be set on storage shelves
+	//mytechband_C = tech300;
+	//my_extn_techband_C = tech3MZ;
+	//my_pe_techband_C = tech3Z4; 
+}
+
+component hpq_fc_drive_encl_m6625_case_extra: M6625_SFF_Case_Extra
+{                                                                                                                            
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue;  
+description: "M6625 SAS SFF Drive Enclosure (AJ840A)";
+label: "M6425";                                                                                                          
+values:    
+   	visible_part_number_S = "AJ840A_EXTRA";
+	my_model_C = hpq_fc_drive_encl_m6625_model_extra;		
+	possible_cabinets_mC = {storage_centric_null_rack, power_on_site_null_rack, EVA_TENKG2_RACKS, hp_S10614_rack};
+	case_id_S = "g_EVA_DiskShelf";
+	my_visio_template_S = "M6625 Disk front";//Temp
+	integration_state_S = "CUSTOM";
+	weight_F = 77.0;
+	sb_Width = 680;
+	sb_Height = 80;
+	height_F = 3.5;
+	power_va_required_F = 301;	
+	power_watts_F = 316;	
+    110V_amps_drawn_F = 1.58;//3.16/2 
+    220V_amps_drawn_F = 0.74;//1.47/2
+}
+
+//TAG: Drive_Shelf_Models
+
+//M6612 SAS LFF Models
+class M6612_LFF_Model: HPQ_FC_Drive_Enclosure_model {}
+class M6612_LFF_Model_Extra: HPQ_FC_Drive_Enclosure_model {}
+
+component hpq_fc_drive_encl_m6612_model: M6612_LFF_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue; 
+description: "M6612 SAS LFF Drive Enclosure";
+label: "M6612";                                                                                                          
+values:
+	my_builder_sheet_C = m5114_drive_enclosure_builder_sheet;
+	spu_model_label_S = "M6412A FC Drive Enclosure";	
+	model_case_C = hpq_fc_drive_encl_m6612_case;
+	base_components_mC = {
+							hpq_m6412_controller, 
+							hpq_m6412_controller,
+							EVA_M6612_default_drive_requester
+                          };
+	partslist_category_mR = {}; 
+}
+
+component hpq_fc_drive_encl_m6612_model_extra: M6612_LFF_Model_Extra
+{
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue; 
+description: "HP M6612 3.5-inch SAS Drive Enclosure  (AJ832A)";
+label: "M6412";                                                                                                          
+values:
+	my_builder_sheet_C = m6412a_drive_enc_standalone_builder_sheet; 
+	spu_model_label_S = "HP M6612 3.5-inch SAS Drive Enclosure  (AJ832A)";		
+	model_case_C = hpq_fc_drive_encl_m6612_case_extra;
+	base_components_mC = {
+							hpq_m6412_controller, 
+							hpq_m6412_controller,
+							EVA_M6612_default_drive_requester
+
+                          };
+
+	ok_storage_devices_mC = {
+							 hpq_600gb_10k_m6612_sas_lff_drive
+							 ,hpq_300gb_15k_m6612_sas_lff_drive
+							 ,hpq_450gb_15k_m6612_sas_lff_drive
+							 ,hpq_600gb_15k_m6612_sas_lff_drive
+							 ,hpq_1tb_7p2k_m6612_sas_lff_drive
+							 };
+
+	max_devices_per_bay_F = 12;
+	min_devices_per_bay_F = 4;
+	partslist_category_mR = {SAN_EVA_LE_Resource};
+	 
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+
+	is_emr_model_B = FALSE;
+}
+
+//SAS SFF Models
+class M6625_SFF_Model: HPQ_FC_Drive_Enclosure_model {}
+class M6625_SFF_Model_Extra: HPQ_FC_Drive_Enclosure_model {}
+
+component hpq_fc_drive_encl_m6625_model: M6625_SFF_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue; 
+description: "M6625 SAS LFF Drive Enclosure";
+label: "M6625";                                                                                                          
+values:
+	my_builder_sheet_C = m5114_drive_enclosure_builder_sheet;
+	spu_model_label_S = "M6412A FC Drive Enclosure";	
+	model_case_C = hpq_fc_drive_encl_m6625_case;
+	base_components_mC = {
+							hpq_m6412_controller, 
+							hpq_m6412_controller,
+							EVA_M6625_default_drive_requester
+                          };
+	partslist_category_mR = {}; 
+}
+
+component hpq_fc_drive_encl_m6625_model_extra: M6625_SFF_Model_Extra
+{
+productLines: EVA_BLUE_PRODUCTLINES; NAS_e7000_Blue; 
+description: "HP M6625 2.5-inch SAS Drive Enclosure  (AJ840A)";
+label: "M6625";                                                                                                          
+values:
+	my_builder_sheet_C = m6412a_drive_enc_standalone_builder_sheet; 
+	spu_model_label_S = "HP M6625 2.5-inch SAS Drive Enclosure  (AJ840A)";		
+	model_case_C = hpq_fc_drive_encl_m6625_case_extra;
+	base_components_mC = {
+							hpq_m6412_controller, 
+							hpq_m6412_controller,
+							EVA_M6625_default_drive_requester
+
+                          };
+
+	ok_storage_devices_mC = {
+							 hpq_146gb_10k_m6612_sas_sff_drive
+							 ,hpq_300gb_10k_m6612_sas_sff_drive
+							 ,hpq_72gb_15k_m6612_sas_sff_drive
+							 ,hpq_146gb_15k_m6612_sas_sff_drive
+							 ,hpq_500gb_15k_m6612_sas_sff_drive
+							 };
+
+	max_devices_per_bay_F = 12;
+	min_devices_per_bay_F = 4;
+	partslist_category_mR = {SAN_EVA_LE_Resource};
+
+#if !defined(DEV_KB)
+		#if KB_TARGET_DATE < 20110202
+			partslist_category_mR = {};
+		#endif KB_TARGET_DATE
+		#if KB_TARGET_DATE < 20110404
+			is_prerelease_B = TRUE;
+		#endif KB_TARGET_DATE	
+#endif
+	
+	is_emr_model_B = FALSE;
+}
+
+//TAG: Drive_Shelf_Requestors
+
+component m6612a_requester: Moongazer_Requester
+{
+productLines: HP;
+values:
+	base_models_mC = {hpq_fc_drive_encl_m6612_model_extra};	
+	cxf_id_S = "M6612A_FC_Drive_Encl";
+}
+
+component m6625a_requester: Moongazer_Requester
+{
+productLines: HP;
+values:
+	base_models_mC = {hpq_fc_drive_encl_m6625_model_extra};	
+	cxf_id_S = "M6625A_FC_Drive_Encl";
+}
+
+Float min_additional_m6612a_F;
+Float max_additional_m6612a_F;
+Float min_additional_m6625a_F;
+Float max_additional_m6625a_F;
+
+component eva_m6612a_extra_drive_shelf_choice: QuantityOfExtraShelvesM6412
+{
+label: "Number of Additional M6612 FC Drive Enclosures";
+values:
+	my_component_C = m6612a_requester;
+	min_attribute_S = "min_additional_m6612_F";
+	max_attribute_S = "max_additional_m6612_F";						
+	desc_width_pixels_F = 300;
+	restrict_control_to_subsystem_B = TRUE;
+	is_enclosed_B = FALSE;
+}
+
+component eva_m6625a_extra_drive_shelf_choice: QuantityOfExtraShelvesM6412
+{
+label: "Number of Additional M6625 FC Drive Enclosures";
+values:
+	my_component_C = m6625a_requester;
+	min_attribute_S = "min_additional_m6625_F";
+	max_attribute_S = "max_additional_m6625_F";						
+	desc_width_pixels_F = 300;
+	restrict_control_to_subsystem_B = TRUE;
+	is_enclosed_B = FALSE;
+}
+
+//TAG: P6300_Buildersheets
+
+//TAG: P6500_Buildersheets
+
+//TAG: P6300_MODELS
+
+class HPQ_EVA_P6300_Model: HPQ_EVA_Model 
+{
+attributes:
+	icon_S = "storage_blue";
+	
+	my_management_servers_mC = { sms_x3800_e5530_sff_base_model_requestor 	//AP797A
+								,sms_x3400_e5504_rack_model_requestor 		//AP796A
+								,sms_x1800_E5520_12lff_base_model_requestor //AP791A
+								};
+
+	my_ha_management_servers_mC = {	 sms_x3800_e5530_sff_base_model_requestor_ha 	//AP797A
+									,sms_x3400_e5504_rack_model_requestor_ha 		//AP796A
+									,sms_x1800_E5520_12lff_base_model_requestor_ha //AP791A
+									}; 
+
+	my_preferred_fc_cable_C = 2m_hpq_multi_mode_om3_fc_lc_lc_cable;
+
+	ok_fibre_cable_req_mC = {	0p5m_hpq_multi_mode_om3_fc_lc_lc_cable, //AJ833A
+								1m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ834A
+								2m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ835A
+								5m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ836A
+								15m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ837A
+								30m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ838A
+								50m_hpq_multi_mode_om3_fc_lc_lc_cable,  //AJ839A
+							 	internal_eva_cable,
+								2m_hpq_fc_lc_lc_cable, 					//221692-B21   
+		                  		5m_hpq_fc_lc_lc_cable,					//221692-B22
+		              	  		15m_hpq_fc_lc_lc_cable,					//221692-B23
+		              	  		30m_hpq_fc_lc_lc_cable,					//221692-B26
+		              	  		50m_hpq_fc_lc_lc_cable,					//221692-B27
+								0p5m_premier_flex_lc_lc_cable			// BK837A
+								1m_premier_flex_lc_lc_cable				// BK838A
+								2m_premier_flex_lc_lc_cable				// BK839A
+								5m_premier_flex_lc_lc_cable				// BK840A
+								15m_premier_flex_lc_lc_cable			// BK841A
+								30m_premier_flex_lc_lc_cable			// BK842A
+								50m_premier_flex_lc_lc_cable			// BK843A
+							};
+//							max_ssd_drives_for_array_F = 24;	//TD 11-2-09 non-cpl
+
+}
+
+class HPQ_EVA_P6300_Base_Model: HPQ_EVA_P6300_Model
+{
+attributes:
+	base_components_mC = { m6612a_requester
+						   ,storage_essentials_v6p1_std_edn_srm_media
+						 };
+
+
+
+// 	base_components_for_ap_mC = {hpq_smartstart_v3p3_media 				//T5505G 
+//								,hpq_cv_bc_dcm_4400_bundle_ltu		    //TA801A
+//								};
+// 	base_components_for_na_emea_mC = {hpq_smartstart_v3p3_media};		//T5505G
+// 	base_components_for_ams_mC = {hpq_smartstart_v3p3_media  			//T5505G
+//								,hpq_cv_bc_dcm_4400_bundle_ltu		    //TA801A
+//								};
+// 	base_components_for_emea_mC = {hpq_smartstart_v3p3_media  			//T5505G
+//								,hpq_cv_eva4400_sw_unl_ltu				//T5497B
+//								,hpq_dyn_cap_mgmt_eva4400_sw_unl_ltu	//T5508B
+//								};
+
+//	base_components_for_japan_mC = {};
+
+//	my_command_view_mCL = {HPQ_CV_EVA4400_Software_LTU_New};
+//	my_business_copy_mCL = {HPQ_BC_EVA4400_Software_New};
+//	my_continuous_access_mCL = {HPQ_CA_EVA4400_Software_New};
+//	my_dynamic_cap_mgmt_mCL = {HPQ_Dynamic_Capacity_Mgmt_EVA4400_LTU_New};
+
+
+	valid_storage_lgs_svcs_tier1_mC = {storage_door_dock_large, storage_inside_desk_large};  //EAH 7/15/08
+
+	min_cable_F = 4;
+
+	min_additional_moongazer_F = 1;
+	max_additional_moongazer_F = 8; 
+}
+
+class HPQ_EVA_P6300_Dummy_Case: HPQ_EVA_LE_Dummy_Case 
+{
+displayStatus: DRAWN;
+subComponents:
+	HP_Bundling_Component skip1_CI = skip_eva4400_options;//Test 		
+attributes:
+	context_storage_height_F = 4;
+	scc_default_support_hierarchy_F = 5; 
+	recommended_support_components_mC = {support_plus_24_3yr_support};//HA110A3  
+	user_can_change_quoted_B = FALSE;
+	cto_bundle_B;// is used for Blade EVAs to fire an error
+	//my_m6412_control_help_text_S = "";
+}
+
+class HPQ_EVA_P6300_Base_Dummy_Case: HPQ_EVA_P6300_Dummy_Case {}  
+
+component hpq_eva_P6300_dummy_case: HPQ_EVA_P6300_Base_Dummy_Case;
+component hpq_eva_P6300_model: HPQ_EVA_P6300_Base_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES;
+values:    
+	visible_part_number_S = "";
+	spu_model_label_S = "P6300 Dual Controller Array (AJ936A)";
+	  
+	label_S = "EVA P6300";
+	cxf_id_S = "EVAP6300_2C1D";
+	base_models_mC = {
+					  hpq_p6300_controller_model
+                  	 };
+
+	//min for drives table
+	min_devices_per_bay_F = 8;
+	max_devices_per_bay_F = 96;
+
+	min_devices_F = 8;
+	max_devices_F = 96;
+
+    model_case_C = hpq_eva_p6300_dummy_case;
+	my_builder_sheet_C = hpq_eva_4400_builder_sheet;
+	//not used? my_management_appliances_mC = {hpq_other_san_management_server, hpq_dl380g4_san_management_server, hpq_san_management_appl_racked_new};	
+    partslist_sort_order_F = 250;
+	ok_installation_services_mC = {};
+	max_enclosure_capacity_F = 4088; 
+	alternative_part_number_S = "AJ936A";
+	weight_F = 175; 
+	partslist_category_mR = {SAN_EVA_4400_Resource}; 
+
+	#if KB_TARGET_DATE < 20080301
+		is_prerelease_B = TRUE;
+	#endif KB_TARGET_DATE
+	is_emr_model_B = FALSE;
+}
+
+component hpq_eva_P6300_dummy_case: HPQ_EVA_P6300_Base_Dummy_Case
+{
+productLines: EVA_BLUE_PRODUCTLINES;
+description: "Enterprise Virtual Array";
+subComponents:
+	Container option_container_CI = hpq_option_container;
+values:
+	description_S = "";
+	racked_case_B = FALSE;
+	sb_ToBeQuoted = TRUE;
+	should_bundle_B = FALSE;
+	racked_case_R = Cannot_Be_Racked_R;
+	my_model_C = hpq_eva_P6300_model;
+	subsystem_C = EVA_P6300_MultiModel_Context_SubSystem;
+	number_of_fibre_channel_controller_F = 4;
+	static_description_S = "4400";
+	mytechband_C = tech300; 	 
+	my_extn_techband_C = tech3MZ;
+	my_pe_techband_C = tech3Z4; 
+	my_drive_C = hpq_146gb_10k_m6625_sas_sff_drive;
+	drive_quantity_F = 8;
+	context_storage_height_F = 4;
+	splash_page_info_S = "PDU Info: \nIf at least one of PDUs to which an EVA is connected is deleted Watson assumes that the power connection of the EVA will be done on-site.  Hence, EVA is disconnected with no EVA power connection rules being enforced!"
+						 " Connection to one PDU is not allowed."
+						 "\n\nThe recommended placement of PDUs in EVA systems is horizontally in the bottom 2U of the EVA rack.  This placement eases serviceability of the bottom shelves of the EVA Array.  If an additional 2U of rack space is required to include additional products such as SAN Switches in the same rack as the EVA, the PDUs can be moved to the rear of the rack by choosing non-Horizontal Mount PDUs in the Rack Configuration Choices screen."
+						 "\n\nOne AG730A #0D1 is required for each pair of vertical mount PDUs."
+						 ;
+}
+
+class HPQ_EVA_P6300_Bundle_Model: HPQ_EVA_P6300_Model
+{
+attributes:
+	base_components_mC = {	//m6612_requester
+							//hpq_bc_eva4400_1tb_ltu,
+							//hpq_dyn_cap_mgmt_eva4400_unl_ltu
+							};
+
+ 	base_components_for_ap_mC = {};
+ 	base_components_for_na_emea_mC = {};
+ 	base_components_for_ams_mC = {};
+ 	base_components_for_emea_mC = {};
+	base_components_for_japan_mC = {};
+
+	my_command_view_mCL = {HPQ_CV_EVA4400_Software_LTU_New};
+	my_business_copy_mCL = {HPQ_BC_EVA4400_Software_New};
+	my_continuous_access_mCL = {HPQ_CA_EVA4400_Software_New};
+	my_dynamic_cap_mgmt_mCL = {HPQ_Dynamic_Capacity_Mgmt_EVA4400_LTU_New};
+
+	valid_storage_lgs_svcs_tier1_mC = {storage_door_dock_large, storage_inside_desk_large};
+
+	min_cable_F = 4;
+	
+	min_additional_m6612a_F = 0;
+	max_additional_m6612a_F = 10;
+
+	min_additional_m6625a_F = 0;
+	max_additional_m6625a_F = 10; 
+
+	my_preferred_fc_cable_C;
+	connections_required_to_san_switch_mF;
+
+	partslist_category_mR = {SAN_EVA_P6300_Resource};
+ 
+}
+
+class HPQ_EVA_P6300_Bundle_Dummy_Case: HPQ_EVA_P6300_Dummy_Case {}
+
+component hpq_eva_P6300_st_kit_300gb_dummy_case: HPQ_EVA_P6300_Bundle_Dummy_Case;
+component hpq_eva_P6300_st_kit_300gb_model: HPQ_EVA_P6300_Bundle_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES;
+values:    
+   	visible_part_number_S = "";
+	spu_model_label_S = "HP P6300 EVA 300GB 10K SAS Fld Start Kit (AP890A)";
+	  
+	label_S = "EVA P6300";
+	cxf_id_S = "EVAP6300_2C1D";
+	base_models_mC = {//New enclosures
+					  hpq_p6300_controller_model,
+					  
+					  hpq_fc_drive_encl_m6625_model
+                  	 };
+
+	//min for drives table
+	min_devices_per_bay_F = 8;
+	max_devices_per_bay_F = 250;
+
+	min_devices_F = 8;
+	max_devices_F = 250;
+
+	ok_fibre_cable_req_mC = {	0p5m_hpq_multi_mode_om3_fc_lc_lc_cable, //AJ833A
+								1m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ834A
+								2m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ835A
+								5m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ836A
+								15m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ837A
+								30m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ838A
+								50m_hpq_multi_mode_om3_fc_lc_lc_cable,  //AJ839A
+							 	
+								0p5m_premier_flex_lc_lc_cable			// BK837A
+								1m_premier_flex_lc_lc_cable				// BK838A
+								2m_premier_flex_lc_lc_cable				// BK839A
+								5m_premier_flex_lc_lc_cable				// BK840A
+								15m_premier_flex_lc_lc_cable			// BK841A
+								30m_premier_flex_lc_lc_cable			// BK842A
+								50m_premier_flex_lc_lc_cable			// BK843A
+
+							};
+	
+	my_command_view_mCL = {HPQ_CV_EVA4400_Software_LTU_New};
+	my_business_copy_mCL = {HPQ_BC_EVA4400_Software_New};
+	my_continuous_access_mCL = {HPQ_CA_EVA4400_Software_New};
+	my_dynamic_cap_mgmt_mCL = {HPQ_Dynamic_Capacity_Mgmt_EVA4400_LTU_New};
+
+
+	model_case_C = hpq_eva_4400_modb_w_switch_st_kit_146gb_dummy_case;
+	my_builder_sheet_C = hpq_eva4400_w_8gb_sw_builder_sheet_b; //hpq_eva4400_w_8gb_sw_builder_sheet
+	//not used? my_management_appliances_mC = {hpq_other_san_management_server, hpq_dl380g4_san_management_server, hpq_san_management_appl_racked_new};	
+    partslist_sort_order_F = 250;
+	ok_installation_services_mC = {};
+	max_enclosure_capacity_F = 4088; 
+	alternative_part_number_S = "AJ695B";
+	weight_F = 175; 
+	partslist_category_mR = {SAN_EVA_P6300_Resource}; 
+	localization_blocking_exclusion_mC = {disjunctive_emea};
+#if KB_TARGET_DATE < 20110202	
+	partslist_category_mR = {};
+#endif KB_TARGET_DATE
+
+//No BCPL for this project
+//	#if KB_TARGET_DATE < 20110202
+//		is_prerelease_B = TRUE;
+//	#endif KB_TARGET_DATE
+	is_emr_model_B = FALSE;
+
+}
+
+//EVA4400 new bundles cpl. Bundles With Switch
+component hpq_eva_4400_modb_w_switch_st_kit_146gb_dummy_case: HPQ_EVA_4400_Bundle_Dummy_Case
+{
+productLines: EVA_BLUE_PRODUCTLINES;
+description: "Enterprise Virtual Array";
+subComponents:
+	Container option_container_CI = hpq_option_container;
+values:
+	description_S = "";
+	racked_case_B = FALSE;
+	sb_ToBeQuoted = TRUE;
+	should_bundle_B = FALSE;
+	racked_case_R = Cannot_Be_Racked_R;
+	my_model_C = hpq_eva_4400_modb_w_switch_st_kit_146gb_model;
+	subsystem_C = hpq_eva_4400_bundle_multimodel_context_subsystem;
+	number_of_fibre_channel_controller_F = 4;
+	static_description_S = "4400";
+	mytechband_C = tech300; 	 
+	my_extn_techband_C = tech3MZ;
+	my_pe_techband_C = tech3Z4; 
+	my_drive_C = hpq_146gb_15k_m6412_fc_drive_b;
+	drive_quantity_F = 8;
+	context_storage_height_F = 4;
+	visible_part_number_S = "eva_4400_modb_w_switch_st_kit_146gb_dummy_case";
+	splash_page_info_S = "  HP EVA4400 146GB w/Emb Switch Simple SAN (AJ695B) includes:\n\n"
+					 "  - 1x EVA4400 Dual Controller Array (AG805C)\n"
+					 "  - 1x M6412A 12-bay HDD Enclosure (AG638x)\n"
+					 "  - 8x 146GB 15K hard disk drives (AG556B)\n"
+					 "  - 4x External HBA's (Emulex 8Gb PCIE AJ762A)\n"
+					 "  - 4x FC cables\n"
+					 "  - 1x Command View Unlimited license to use (T5497x)\n"
+					 "  - 1x Smart Start for HP EVA Storage media kit, including Command View media (T5505x)\n"
+					 "  - Advanced Fabric OS, Advanced Web Tools and Advanced Zoning are included with every switch.\n"
+					 "  Do not offer in EMEA.\n\n"
+					 "  Notes:\n\n"
+					 "  1. All standard EVA4400 upgrades for hardware and software are available for this EVA4400 Starter Kit.\n"
+					 "  2. Requires the purchase of a rack for factory integration.\n"
+					 "  3. To upgrade the base EVA4400 standard 3 year warranty, please refer to HP support and Care pack services."//czulueta 04/13/09 change for qc [23311]
+					 "\n\nPDU Info: \nIf at least one of PDUs to which an EVA is connected is deleted Watson assumes that the power connection of the EVA will be done on-site.  Hence, EVA is disconnected with no EVA power connection rules being enforced!"
+					 "  Connection to one PDU is not allowed."
+						 "\n\nThe recommended placement of PDUs in EVA systems is horizontally in the bottom 2U of the EVA rack.  This placement eases serviceability of the bottom shelves of the EVA Array.  If an additional 2U of rack space is required to include additional products such as SAN Switches in the same rack as the EVA, the PDUs can be moved to the rear of the rack by choosing non-Horizontal Mount PDUs in the Rack Configuration Choices screen."
+						 "\n\nOne AG730A #0D1 is required for each pair of vertical mount PDUs.\n"
+					 "Not compatible with Smart Start versions T5505A/B and T5505AAE/BAE\n"
+					 ;
+#if KB_TARGET_DATE < 20110202	
+	partslist_category_mR = {};
+#endif KB_TARGET_DATE
+
+//No BCPL for this project
+//	#if KB_TARGET_DATE < 20110202
+//		is_prerelease_B = TRUE;
+//	#endif KB_TARGET_DATE
+
+}
+
+//EVA4400 new bundles cpl. Bundles With Switch
+component hpq_eva_4400_modb_w_switch_st_kit_146gb_dummy_case_field: HPQ_EVA_4400_Bundle_Dummy_Case;
+component hpq_eva_4400_modb_w_switch_st_kit_146gb_model_field: HPQ_EVA_4400_Bundle_Model
+{
+productLines: EVA_BLUE_PRODUCTLINES;
+values:    
+   	visible_part_number_S = "";
+	spu_model_label_S = "HP EVA4400 146GB w/Switch Fld Simple SAN (AJ696B)";
+	  
+	label_S = "EVA 4400";
+	cxf_id_S = "EVA4400_MODB_2C1D_w_switch_field";
+	base_models_mC = {//New enclosures
+					  hpq_hsv300_modc_controller_w_8gb_switch_san_model_new,
+					  //hpq_fc_drive_encl_m6412a_model_extra_b
+					  hpq_fc_drive_encl_m6412a_model
+                  	 };
+
+	//min for drives table
+	min_devices_per_bay_F = 8;
+	max_devices_per_bay_F = 96;
+
+	min_devices_F = 8;
+	max_devices_F = 96;
+
+	ok_fibre_cable_req_mC = {	0p5m_hpq_multi_mode_om3_fc_lc_lc_cable, //AJ833A
+								1m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ834A
+								2m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ835A
+								5m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ836A
+								15m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ837A
+								30m_hpq_multi_mode_om3_fc_lc_lc_cable, 	//AJ838A
+								50m_hpq_multi_mode_om3_fc_lc_lc_cable,  //AJ839A
+							 	
+								0p5m_premier_flex_lc_lc_cable			// BK837A
+								1m_premier_flex_lc_lc_cable				// BK838A
+								2m_premier_flex_lc_lc_cable				// BK839A
+								5m_premier_flex_lc_lc_cable				// BK840A
+								15m_premier_flex_lc_lc_cable			// BK841A
+								30m_premier_flex_lc_lc_cable			// BK842A
+								50m_premier_flex_lc_lc_cable			// BK843A
+							};
+#ifdef EVA4400_NEW_BUNDLES	
+	my_command_view_mCL = {HPQ_CV_EVA4400_Software_LTU_New};
+	my_business_copy_mCL = {HPQ_BC_EVA4400_Software_New};
+	my_continuous_access_mCL = {HPQ_CA_EVA4400_Software_New};
+	my_dynamic_cap_mgmt_mCL = {HPQ_Dynamic_Capacity_Mgmt_EVA4400_LTU_New};
+#endif
+
+    model_case_C = hpq_eva_4400_modb_w_switch_st_kit_146gb_dummy_case_field;
+	my_builder_sheet_C = hpq_eva4400_w_8gb_sw_builder_sheet_b;
+	//not used? my_management_appliances_mC = {hpq_other_san_management_server, hpq_dl380g4_san_management_server, hpq_san_management_appl_racked_new};	
+    partslist_sort_order_F = 250;
+	ok_installation_services_mC = {};
+	max_enclosure_capacity_F = 4088; 
+	alternative_part_number_S = "AJ696B";
+	weight_F = 175; 
+	partslist_category_mR = {SAN_EVA_P6300_Resource}; 
+	localization_blocking_exclusion_mC = {disjunctive_emea};
+
+#if KB_TARGET_DATE < 20090427	
+	partslist_category_mR = {};
+#endif KB_TARGET_DATE
+
+//No BCPL for this project
+//	#if KB_TARGET_DATE < 20110202
+//		is_prerelease_B = TRUE;
+//	#endif KB_TARGET_DATE
+	is_emr_model_B = FALSE;
+}
+
+component hpq_eva_4400_modb_w_switch_st_kit_146gb_dummy_case_field: HPQ_EVA_4400_Bundle_Dummy_Case
+{
+productLines: EVA_BLUE_PRODUCTLINES;
+description: "Enterprise Virtual Array";
+subComponents:
+	Container option_container_CI = hpq_option_container;
+	HP_Bundling_Component skip1_CI = dont_bundle_object; 		
+values:
+	description_S = "";
+	racked_case_B = FALSE;
+	sb_ToBeQuoted = TRUE;
+	should_bundle_B = FALSE;
+	racked_case_R = Cannot_Be_Racked_R;
+	my_model_C = hpq_eva_4400_modb_w_switch_st_kit_146gb_model_field;
+	subsystem_C = hpq_eva_4400_bundle_multimodel_context_subsystem;
+	number_of_fibre_channel_controller_F = 4;
+	static_description_S = "4400";
+	mytechband_C = tech300; 	 
+	my_extn_techband_C = tech3MZ;
+	my_pe_techband_C = tech3Z4; 
+	my_drive_C = hpq_146gb_15k_m6412_fc_drive_b;
+	drive_quantity_F = 8;
+	context_storage_height_F = 4;
+	visible_part_number_S = "eva_4400_modb_w_switch_st_kit_146gb_dummy_case_field";
+	field_int_bundle_B = TRUE;
+	splash_page_info_S = "  HP EVA4400 146GB w/Switch Fld Simple SAN (AJ696B) includes:\n\n"
+					 "  - 1x EVA4400 Dual Controller Array (AG805C)\n"
+					 "  - 1x M6412A 12-bay HDD Enclosure (AG638x)\n"
+					 "  - 8x 146GB 15K hard disk drives (AG556B)\n"
+					 "  - 4x External HBA's (Emulex 8Gb PCIEA J762A)\n"
+					 "  - 4x FC cables\n"
+					 "  - 1x Command View Unlimited license to use (T5497x)\n"
+					 "  - 1x Smart Start for HP EVA Storage media kit, including Command View media (T5505x)\n"
+					 "  - Advanced Fabric OS, Advanced Web Tools and Advanced Zoning are included with every switch.\n"
+					 "  Do not offer in EMEA.\n\n"
+					 "  Notes:\n\n"
+					 "  1. All standard EVA4400 upgrades for hardware and software are available for this EVA4400 Starter Kit.\n"
+					 "  2. Requires the purchase of a rack for factory integration.\n"
+					 "  3. To upgrade the base EVA4400 standard 3 year warranty, please refer to HP support and Care pack services."
+					 "\n\nPDU Info: \nIf at least one of PDUs to which an EVA is connected is deleted Watson assumes that the power connection of the EVA will be done on-site.  Hence, EVA is disconnected with no EVA power connection rules being enforced!"
+					 "  Connection to one PDU is not allowed."
+						 "\n\nThe recommended placement of PDUs in EVA systems is horizontally in the bottom 2U of the EVA rack.  This placement eases serviceability of the bottom shelves of the EVA Array.  If an additional 2U of rack space is required to include additional products such as SAN Switches in the same rack as the EVA, the PDUs can be moved to the rear of the rack by choosing non-Horizontal Mount PDUs in the Rack Configuration Choices screen."
+						 "\n\nOne AG730A #0D1 is required for each pair of vertical mount PDUs.\n"
+					 "Not compatible with Smart Start versions T5505A/B and T5505AAE/BAE\n"
+					 ;
+#if KB_TARGET_DATE < 20110202 	
+	partslist_category_mR = {};
+#endif KB_TARGET_DATE
+
+}
+
+//TAG: P6500_MODELS
+
+
+
+
+//TAG: P6300_SCC_MODELS
+
+
+
+
+//TAG: P6500_SCC_MODELS
